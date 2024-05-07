@@ -1,7 +1,7 @@
-from predicate_logic import CON, FORMULA, NEG, DIS, VAR
+from cnf import CNF
 
 # code for dpll alrogithm is adapted from https://en.wikipedia.org/wiki/DPLL_algorithm
-def dpll(f : DIMACS):
+def dpll(f : CNF):
     
     '''
     DPLL algorithm
