@@ -1,2 +1,1 @@
-# sat-solver
-sat solver za Logiko v računalništvu
+SAT solver for Logika v računalništvu. Written in python. 
