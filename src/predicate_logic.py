@@ -11,10 +11,10 @@ class FORMULA:
     def __init__(self) -> None:
         pass
 
-    def find_unit_clause():
+    def find_unit_literal():
         raise NotImplementedError 
 
-    def unit_propagate(unit_clause):
+    def unit_propagate(unit_literal):
         raise NotImplementedError 
 
     def find_pure_literal():
@@ -29,6 +29,14 @@ class FORMULA:
     def find_empty_clause():
         raise NotImplementedError 
 
+class TRUE(FORMULA):
+    def __init__(self) -> None:
+        super().__init__()
+
+class FALSE(FORMULA):
+    def __init__(self) -> None:
+        super().__init__()
+
 class CON(FORMULA):
     """
     Represents conjunction (logical and) in predicate logic. 
@@ -41,10 +49,10 @@ class CON(FORMULA):
         self.left = left
         self.right = right 
 
-    def find_unit_clause():
+    def find_unit_literal():
         pass
 
-    def unit_propagate(unit_clause):
+    def unit_propagate(unit_literal):
         pass
 
     def find_pure_literal():
@@ -73,12 +81,32 @@ class NEG(FORMULA):
     """
     implementira ali
     """
-
+    def __new__(cls, f : FORMULA):
+        #  transforms NEG(NEG(f)) to f
+        if isinstance(f, NEG):
+            return f.f 
+        return super().__new__(cls)
+    
     def __init__(self, f: FORMULA) -> None:
         '''
         Creates an object that represents NOT f
         '''
         self.f = f 
+    def __hash__(self) -> int:
+        return hash(str(self))
+    
+
+            
+    
+    def __eq__(self, value: object) -> bool:
+        if isinstance(value, NEG):
+            if self.f == value.f:
+                return True
+        return False
+    def __str__(self) -> str:
+        return f'!({str(self.f)})'
+    def __repr__(self):
+        return f'!({repr(self.f)})' 
 
 
 class VAR(FORMULA):
@@ -94,6 +122,20 @@ class VAR(FORMULA):
         ---------
         `id` : integer (or any other object), that identifies the variable. VAR(1) always represents the same variable 1.  
         '''
-        pass
+        self.id = id
+    
+    # VARIABLES should be in 1:1 correspondance with ids. 
+    def __eq__(self, value: object) -> bool:
+        if isinstance(value, VAR):
+            if value.id == self.id:
+                return True
+        return False
+
+    def __str__(self) -> str:
+        return 'v' + str(self.id)
+    def __repr__(self):
+        return 'v' +  str(self.id)
+    def __hash__(self) -> int:
+        return hash(str(self))
 
 
