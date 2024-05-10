@@ -3,6 +3,9 @@ from itertools import chain
 
 
 def is_literal(f: FORMULA):
+    '''
+    True, if f is a literal. False otherwise.
+    '''
     if isinstance(f, VAR):
         return True
     if isinstance(f, NEG):
@@ -12,6 +15,9 @@ def is_literal(f: FORMULA):
 
 
 def is_negation(f: FORMULA):
+    '''
+    True, if f = NEG(g) for some g : FORMULA: False otherwise.
+    '''
     if isinstance(f, NEG):
         return True
     return False
