@@ -1,11 +1,14 @@
 from predicate_logic import *
 from itertools import chain
+from random import choice, seed 
+seed(420)
+
 
 
 def is_literal(f: FORMULA):
-    '''
+    """
     True, if f is a literal. False otherwise.
-    '''
+    """
     if isinstance(f, VAR):
         return True
     if isinstance(f, NEG):
@@ -15,9 +18,9 @@ def is_literal(f: FORMULA):
 
 
 def is_negation(f: FORMULA):
-    '''
+    """
     True, if f = NEG(g) for some g : FORMULA: False otherwise.
-    '''
+    """
     if isinstance(f, NEG):
         return True
     return False
@@ -97,6 +100,10 @@ class CNF(FORMULA):
             if l is not None:
                 return l
         return None
+
+    def choose_literal(self):
+        c = choice(self.clauses)
+        return choice(c.literals)
 
     def unit_propagate(self, unit_literal):
         # pythonic magic --> first propagates all the clauses, than removes the True ones

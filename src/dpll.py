@@ -51,6 +51,7 @@ def dpll(f: CNF):
         while True:
             unit_literal = f.find_unit_literal()
             if unit_literal is None:
+                
                 break
 
             # this literal should be true. Add this to the solutions
@@ -62,6 +63,7 @@ def dpll(f: CNF):
         while True:
             pure_literal = f.find_pure_literal()
             if pure_literal is None:
+              
                 break
             # set the literal to true
             solution.update(solve_literal(pure_literal))
@@ -71,7 +73,7 @@ def dpll(f: CNF):
         # stopping conditions:
         if f.is_empty():
             return solution
-        if f.has_empty_clause() is not None:
+        if f.has_empty_clause():
             return None
 
         # DPLL procedure:
@@ -80,7 +82,7 @@ def dpll(f: CNF):
         # if setting literal to True solves the formula, thats it. Otherwise try with NEG(literal)
         ans = algorithm(CNF(*f.clauses, CLAUSE(literal)), solution)
         if ans is not None:
-            return ans 
-        return algorithm(*f.clauses, CLAUSE(NEG(literal)))
+            return ans
+        return algorithm(CNF(*f.clauses, CLAUSE(NEG(literal))), solution)
 
     return algorithm(f, {})
