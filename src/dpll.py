@@ -46,12 +46,11 @@ def dpll(f: CNF):
     """
 
     def algorithm(f: CNF, solution: dict):
-
         # unit propagation:
         while True:
             unit_literal = f.find_unit_literal()
             if unit_literal is None:
-                
+
                 break
 
             # this literal should be true. Add this to the solutions
@@ -63,7 +62,7 @@ def dpll(f: CNF):
         while True:
             pure_literal = f.find_pure_literal()
             if pure_literal is None:
-              
+
                 break
             # set the literal to true
             solution.update(solve_literal(pure_literal))
