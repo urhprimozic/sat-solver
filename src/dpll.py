@@ -70,7 +70,7 @@ def dpll(f: CNF):
 
         # stopping conditions:
         if f.is_empty():
-            return {}, solution
+            return solution
         if f.has_empty_clause() is not None:
             return None
 

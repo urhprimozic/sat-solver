@@ -148,7 +148,7 @@ class CNF(FORMULA):
 
     def has_empty_clause(self):
         for c in self.clauses:
-            if len(c.literels) == 0:
+            if len(c.literals) == 0:
                 return True
         return False
 
