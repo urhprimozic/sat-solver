@@ -78,10 +78,13 @@ def dpll(f: CNF):
         # DPLL procedure:
         literal = f.choose_literal()
 
+        #create a copy of a formula:
+        f1 = CNF(*f.clauses, CLAUSE(NEG(literal))).copy()
+
         # if setting literal to True solves the formula, thats it. Otherwise try with NEG(literal)
         ans = algorithm(CNF(*f.clauses, CLAUSE(literal)), solution)
         if ans is not None:
             return ans
-        return algorithm(CNF(*f.clauses, CLAUSE(NEG(literal))), solution)
+        return algorithm(f1, solution)
 
     return algorithm(f, {})

@@ -41,16 +41,22 @@ class CLAUSE(FORMULA):
         Returns a unit literal l if a clouse only contains l , None otherwise
         """
         if len(self.literals) == 1:
+            
+          
             return self.literals[0]
         return None
 
     def unit_propagate(self, unit_literal):
+
+
         # if literal (which is set to TRUE) is included in this clause, the clause is TRUE --> remove it
         # else  if NEG(literal) is included --> remove  all NEG(literal)
         # else do not remove
         if unit_literal in self.literals:
             return True  # aka remove the clause
         # remove NEG(literal)s
+              
+       
         self.literals = [l for l in self.literals if l != NEG(unit_literal)]
 
     def find_pure_literal():
@@ -76,6 +82,13 @@ class CLAUSE(FORMULA):
 
     def __repr__(self) -> str:
         return str(self)
+
+    def copy(self) -> FORMULA:
+        '''
+        Returns a fresh copy
+        '''
+        literals = [l for l in self.literals]
+        return CLAUSE(*literals)
 
 
 is_clause = lambda x: isinstance(x, CLAUSE)
@@ -170,3 +183,10 @@ class CNF(FORMULA):
 
     def __repr__(self) -> str:
         return str(self)
+    
+    def copy(self) -> FORMULA:
+        '''
+        Returns a fresh copy
+        '''
+        clauses = [c.copy() for c in self.clauses]
+        return CNF(*clauses)
